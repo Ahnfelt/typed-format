@@ -1,0 +1,29 @@
+// A piece of Unicode text, UTF-8.
+type String(bytes utf8)
+
+// A signed 64 bit integer, big-endian. The most 1-7 significant bytes may be left out if zero.
+type Int(bytes i64)
+
+// A 64 bit float, IEEE 754 double-precision binary floating-point format. The most 1-7 significant bytes may be left out if zero.
+type Float(bytes f64)
+
+type Void()
+
+type Bool {
+    False
+    True
+}
+
+type Option<T> {
+    None
+    Some(T value)
+}
+
+type List<T> {
+    Empty
+    Link(T head, List<T> tail)
+}
+
+type Pair<K, V>(K key, V value)
+
+type Map<K, V>(List<Pair<K, V>> entries)
