@@ -41,27 +41,13 @@ In the above example, a list of three numbers 1-3 could be written in pseudo-cod
 All the types that are called "primitive" in other languages can be defined as a user-defined type wrapping a byte sequence. For example, the standard library contains a `String` type with a field `utf8` that, as the name implies, contains UTF-8-encoded text:
 
     type String(bytes utf8)
-    
-Representing signed and unsigned ints of different sizes is equally straightforward, as is floating point values:
 
-    type I8(bytes value)
-    type I16(bytes value)
-    type I32(bytes value)
-    type I64(bytes value)
-    type U8(bytes value) 
-    type U16(bytes value) 
-    type U32(bytes value) 
-    type U64(bytes value) 
-    type F16(bytes value) 
-    type F32(bytes value) 
-    type F64(bytes value) 
+To ease interopability, the standard library only defines two numeric types: A 64 bit integer and a 64 bit floating point type.
 
-The binary format will make sure small values are represented in a compact fashion, and big values with minimal overhead. The in-memory representation is as always up to the target language. 
+    type Int(bytes i64)
+    type Float(bytes f64)
 
-However, to ease interopability, the standard library only defines two numeric types: A 64 bit integer and a 64 bit floating point type.
-
-    type Long(bytes i64)
-    type Double(bytes f64)
+The binary format will make sure small values are represented in a compact fashion, and big values with minimal overhead. The in-memory representation is as always up to the target language. It's trivially easy to define other numeric types.
 
 The schema language is encoded in ASCII and has the following grammar, where `UPPER` is an upper case letter (A-Z) followed by zero or more letters and digits (0-9), and where `LOWER` is as `UPPER`, except that `LOWER` starts with a lower case letter (a-z). Whitespace can be used to separate tokens, but is otherwise ignored.
 
