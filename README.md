@@ -72,8 +72,8 @@ The rules in the following table is used to encode byte sequences. The byte sequ
 | Condition | Encoding |
 |-----------|----------|
 | `length(bs) = 1` and `bs[0] < 128` | `byte(bs[0])` |
-| `length(bs) < 120` | `byte(128 + length(bs)) byte(bs[0]) ... byte(bs[length(bs) - 1])` |
-| otherwise | `byte(255) u32(length(bs)) byte(bs[0]) ... byte(bs[length(bs) - 1])` |
+| `length(bs) < 120`                 | `byte(128 + length(bs))                 byte(bs[0]) ... byte(bs[length(bs) - 1])` |
+| otherwise                          | `byte(255)              u32(length(bs)) byte(bs[0]) ... byte(bs[length(bs) - 1])` |
 
 ### Constructors
 
@@ -81,9 +81,9 @@ The rules in the following table is used to encode constructors. The constructor
 
 | Condition | Encoding |
 |-----------|----------|
-| exactly one constructor | `encode(fs[0]) ... encode(fs[length(fs) - 1])` |
-| `c < 128` | `byte(c) encode(fs[0]) ... encode(fs[length(fs) - 1])` |
-| otherwise | `byte(254) u32(c) encode(fs[0]) ... encode(fs[length(fs) - 1])` |
+| exactly one constructor | `                 encode(fs[0]) ... encode(fs[length(fs) - 1])` |
+| `c < 128`               | `byte(c)          encode(fs[0]) ... encode(fs[length(fs) - 1])` |
+| otherwise               | `byte(254) u32(c) encode(fs[0]) ... encode(fs[length(fs) - 1])` |
 
 ### Arrays
 
@@ -91,5 +91,5 @@ If a type is defined exactly like the `List<T>` type mentioned earlier, modulo r
 
 | Condition | Encoding |
 |-----------|----------|
-| `length(es) < 120` | `byte(128 + length(es)) encode(es[0]) ... encode(es[length(es) - 1])` |
-| otherwise | `byte(255) u32(length(es)) encode(es[0]) ... encode(es[length(es) - 1])` |
+| `length(es) < 120` | `byte(128 + length(es))                 encode(es[0]) ... encode(es[length(es) - 1])` |
+| otherwise          | `byte(255)              u32(length(es)) encode(es[0]) ... encode(es[length(es) - 1])` |
