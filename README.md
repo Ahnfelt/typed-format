@@ -91,9 +91,9 @@ The rules in the following table is used to encode constructors. The constructor
 
 | Condition | Encoding |
 |-----------|---------:|
-| one or zero constructors | ```            E(fs[...])``` |
-| `c < 128`                | ```B(c)        E(fs[...])``` |
-| otherwise                | ```B(254) U(c) E(fs[...])``` |
+| exactly one constructor | ```            E(fs[...])``` |
+| `c < 128`               | ```B(c)        E(fs[...])``` |
+| otherwise               | ```B(254) U(c) E(fs[...])``` |
 
 ### Arrays
 
