@@ -63,19 +63,23 @@ The schema language is encoded in ASCII and has the following grammar, where `UP
 
 ## Binary format
 
-The following sections contain the logic for encoding values into the binary format. The syntax `a[i]` means the element `i` of array `a`, where `i` is the zero based array index. The syntax `length(a)` means the number of elements in array `a`. The syntax `byte(b)` is the literal value of `b` as a byte in the resulting encoding. The syntax `u32(i)` is the literal value of `i` as a 32 bit unsigned big-endian integer in the resulting encoding. The syntax `f(a[0]) ... f(a[length(a) - 1])` means "apply `f` to all elements of `a` in order".
+The following sections contain the logic for encoding values into the binary format. The resulting functions is called `encode`. Pick the first row in the table that is applicable. The syntax `a[i]` means the element `i` of array `a`, where `i` is the zero based array index. The syntax `length(a)` means the number of elements in array `a`. The syntax `byte(b)` is the literal value of `b` as a byte in the resulting encoding. The syntax `u32(i)` is the literal value of `i` as a 32 bit unsigned big-endian integer in the resulting encoding. The syntax `f(a[0]) ... f(a[length(a) - 1])` means "apply `f` to all elements of `a` in order".
 
 ### Byte sequences
 
+The rules in the following table is used to encode byte sequences. The byte sequence is an array of bytes called `bs`.
+
 | Condition | Encoding |
-| ------------------------|----------|
+|-----------|----------|
 | `length(bs) = 1` and `bs[0] < 128` | `byte(bs[0])` |
 | `length(bs) < 120` | `byte(128 + length(bs)) byte(bs[0]) ... byte(bs[length(bs) - 1])` |
 | `otherwise` | `byte(255) u32(length(bs)) byte(bs[0]) ... byte(bs[length(bs) - 1])` |
 
 ### Constructors
 
+The rules in the following table is used to encode constructors. The constructor number is called `b` and the fields of the constructor is an array called `fs`.
+
 | Condition | Encoding |
-| ------------------------|----------|
+|-----------|----------|
 | `c < 128` | `byte(c) encode(fs[0]) ... encode(fs[length(fs) - 1])` |
 | `otherwise` | `byte(254) u32(c) encode(fs[0]) ... encode(fs[length(fs) - 1])` |
