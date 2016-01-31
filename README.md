@@ -55,7 +55,7 @@ It's possible to import schemas from URLs, for use in the local schema, either q
     import C "https://raw.githubusercontent.com/Ahnfelt/typed-format/master/common.ti"
     type Author(C.List<C.String> bookTitles)
 
-The schema language is encoded in ASCII and has the following grammar, where `UPPER` is an upper case letter (A-Z) followed by zero or more letters and digits (0-9), and where `LOWER` is as `UPPER`, except that `LOWER` starts with a lower case letter (a-z). The `URL` begins with a double quote (") and continues until the next double quote. Whitespace can be used to separate tokens, but is otherwise ignored.
+The schema language is encoded in ASCII and has the following grammar, where `UPPER` is an upper case letter (A-Z) followed by zero or more letters and digits (0-9), and where `LOWER` is as `UPPER`, except that `LOWER` starts with a lower case letter (a-z). The `URL` begins with a double quote (") and continues until the next double quote. Whitespace can be used to separate tokens, but is otherwise ignored. Comments begin with a // and continues to the end of the line, and are ignored.
 
     schema     ::= import* definition*
     import     ::= "import" UPPER? URL
