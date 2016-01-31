@@ -2,10 +2,12 @@
 type Instant(Int epochMs)
 type InstantOffset(Instant instant, Int offsetMs)
 
-// Date and time (month: 1-12, day: 1-31)
+// Local date and time (month: 1-12, day: 1-31)
 type Date(Int year, Int month, Int day)
 type Time(Int hour, Int minute, Int second)
 type DateTime(Date date, Time time)
+
+// Zoned date and time
 type Zone(String name)
 type DateZoned(Date date, Zone zone)
 type TimeZoned(Time time, Zone zone)
