@@ -1,6 +1,7 @@
 # typed-format
 Experimental: A minimal and complete schema language and a compact binary format for data interchange.
 
+
 ## Schema language
 
 The schema language defines two kinds of types: The built-in type `bytes` (the only, built-in type) which represents a sequence of bytes; and user-defined types. The user defined types are algebraic datatypes, letting you express record types, eg. "this field OR this field OR this field..." as well as sum types, eg. "this sort of value OR this sort of value OR this sort of value...".
@@ -58,4 +59,33 @@ The schema language is encoded in ASCII and has the following grammar, where `UP
     generics   ::= "<" UPPER ("," UPPER)* ">"
     type       ::= "bytes" | custom
     custom     ::= UPPER ("<" custom ("," custom)* ">")?
+
+
+## Binary format
+
+The binary format encodes byte sequences and constructors. For both there is a long form, a short form and a tiny form. The encode must always use the shortest possible form. As an exception to this, the array form may be used instead when applicable.
+
+### Long forms
+
+*Long byte sequence form:* The byte `255` followed by four bytes containing the length as a 32-bit big endian unsigned integer, followed by the raw bytes.
+
+*Long constructor form:* The byte `254` followed by four bytes containing the contstructor number (the first constructor is number 0, the second is number 1 and so on), followed by the serialization of the constructor fields (if any).
+
+### Short forms
+
+*Short byte sequence form:* Only available when the byte sequence is either empty or has a length between 2 and 119 (both inclusive). The byte `n + 128` where `n` is the length of the byte sequence, followed by the raw bytes.
+
+*Short constructor form:* Only available when the constructor number is less than 128. The byte `n` where `n` is the constructor number, followed by the serialization of the constructor fields (if any).
+
+### Tiny forms
+
+*Tiny byte sequence form:* Only available when the byte sequence is exactly one byte long, and that byte is in the range 0 to 127 (both inclusive). The byte `n`, where `n` is the only byte in the sequence.
+
+### Array forms
+
+These are only available for types that are defined exactly like `List<T>` above, modulo renaming of identifiers and reordering of the two constructors.
+
+*Long array form:* The byte `255` followed by four bytes containing the length of the list as a 32-bit big endian unsigned integer, followed by the serialization of the elements of the list.
+
+*Short array form:* Only available when the length of the list is less than 128. The byte `n + 128` where `n` is the length of the list, followed by the serialization of the elements of the list.
 
