@@ -4,7 +4,7 @@ Experimental: A simple and complete schema language and a compact binary format 
 
 ## Schema language
 
-The schema language defines two kinds of types: The built-in type `bytes` (the only, built-in type) which represents a sequence of bytes; and user-defined types. The user defined types are algebraic datatypes, letting you express record types, eg. "this field OR this field OR this field..." as well as sum types, eg. "this sort of value OR this sort of value OR this sort of value...".
+The schema language defines two kinds of types: The built-in type `bytes` (the only, built-in type) which represents a sequence of bytes; and user-defined types. The user defined types are algebraic datatypes, letting you express record types, eg. "this field AND this field AND this field..." as well as sum types, eg. "this sort of value OR this sort of value OR this sort of value...".
 
 As an example, the following user-defined type `Person` has a text field `name` and an integer field `age`:
 
