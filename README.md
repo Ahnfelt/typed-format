@@ -50,15 +50,15 @@ To ease interopability, the standard library only defines two numeric types: A 6
 
 The binary format will make sure small values are represented in a compact fashion, and big values with minimal overhead. The in-memory representation is as always up to the target language. It's trivially easy to define other numeric types.
 
-It's possible to import schemas from URLs, for use in the local schema, eg.
+It's possible to import schemas from URLs, for use in the local schema, either qualified or unqualified (eg. leave out the `C` and `C.`):
 
-    import S https://raw.githubusercontent.com/Ahnfelt/typed-format/master/foo.ti
-    type Author(S.List<S.String> bookTitles)
+    import C "https://raw.githubusercontent.com/Ahnfelt/typed-format/master/common.ti"
+    type Author(C.List<C.String> bookTitles)
 
-The schema language is encoded in ASCII and has the following grammar, where `UPPER` is an upper case letter (A-Z) followed by zero or more letters and digits (0-9), and where `LOWER` is as `UPPER`, except that `LOWER` starts with a lower case letter (a-z). The `URL` is simply a sequence of one or more non-whitespace characters. Whitespace can be used to separate tokens, but is otherwise ignored.
+The schema language is encoded in ASCII and has the following grammar, where `UPPER` is an upper case letter (A-Z) followed by zero or more letters and digits (0-9), and where `LOWER` is as `UPPER`, except that `LOWER` starts with a lower case letter (a-z). The `URL` begins with a double quote (") and continues until the next double quote. Whitespace can be used to separate tokens, but is otherwise ignored.
 
     schema     ::= import* definition*
-    import     ::= "import" UPPER URL
+    import     ::= "import" UPPER? URL
     definition ::= "type" UPPER generics? body
     body       ::= fields | "{" (UPPER fields?)* "}"
     fields     ::= "(" (type LOWER ("," type LOWER)*)? ")"
