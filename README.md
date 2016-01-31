@@ -63,7 +63,7 @@ The schema language is encoded in ASCII and has the following grammar, where `UP
 
 ## Binary format
 
-The following sections contain the logic for encoding values into the binary format. The resulting functions is called `encode`. Pick the first row in the table that is applicable. The syntax `a[i]` means the element `i` of array `a`, where `i` is the zero based array index. The syntax `length(a)` means the number of elements in array `a`. The syntax `B(x)` is the literal value of `x` as a byte in the resulting encoding. The syntax `U(i)` is the literal value of `i` as a 32 bit unsigned big-endian integer in the resulting encoding. The syntax `f(a[...])` means "apply `f` to all elements of `a` in order".
+The following sections contain the logic for encoding values into the binary format. Pick the first row in the table that is applicable. The syntax `a[i]` means the element `i` of array `a`, where `i` is the zero based array index. The syntax `length(a)` means the number of elements in array `a`. The syntax `B(x)` is the literal value of `x` as a byte in the resulting encoding. The syntax `U(x)` is the literal value of `x` as a 32 bit unsigned big-endian integer in the resulting encoding. The syntax `E(x)` is the encoding of `x` as specified by this section. The syntax `f(a[...])` means "apply `f` to all elements of `a` in order".
 
 ### Byte sequences
 
@@ -81,9 +81,9 @@ The rules in the following table is used to encode constructors. The constructor
 
 | Condition | Encoding |
 |-----------|---------:|
-| exactly one constructor | ```            encode(fs[...])``` |
-| `c < 128`               | ```B(c)        encode(fs[...])``` |
-| otherwise               | ```B(254) U(c) encode(fs[...])``` |
+| exactly one constructor | ```            E(fs[...])``` |
+| `c < 128`               | ```B(c)        E(fs[...])``` |
+| otherwise               | ```B(254) U(c) E(fs[...])``` |
 
 ### Arrays
 
@@ -91,5 +91,5 @@ If a type is defined exactly like the `List<T>` type mentioned earlier, modulo r
 
 | Condition | Encoding |
 |-----------|---------:|
-| `length(es) < 120` | ```B(128 + length(es))               encode(es[...])``` |
-| otherwise          | ```B(255)              U(length(es)) encode(es[...])``` |
+| `length(es) < 120` | ```B(128 + length(es))               E(es[...])``` |
+| otherwise          | ```B(255)              U(length(es)) E(es[...])``` |
