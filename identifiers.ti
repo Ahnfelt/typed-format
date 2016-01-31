@@ -8,3 +8,9 @@ type Uri(String uri)
 
 // An e-mail address
 type Email(String address)
+
+// An IP address (v4 or v6)
+type Ip(String ip) // TODO: Binary format instead?
+
+// A hostname
+type Host(String name)
