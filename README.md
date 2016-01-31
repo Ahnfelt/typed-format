@@ -34,6 +34,7 @@ In the above example, a list of three numbers 1-3 could be written in pseudo-cod
 
 The schema language is encoded in ASCII and has the following grammar, where `UPPER` is an upper case letter (A-Z) followed by zero or more letters and digits (0-9), and where `LOWER` is as `UPPER`, except that `LOWER` starts with a lower case letter (a-z). Whitespace can be used to separate tokens, but is otherwise ignored.
 
+    schema     ::= definition*
     definition ::= "type" UPPER generics? body
     body       ::= fields | "{" (UPPER fields?)* "}"
     fields     ::= "(" (type LOWER ("," type LOWER)*)? ")"
