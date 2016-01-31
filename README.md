@@ -70,8 +70,8 @@ The following sections contain the logic for encoding values into the binary for
 The rules in the following table is used to encode byte sequences. The byte sequence is an array of bytes called `bs`.
 
 | Condition | Encoding |
-|-----------|----------|
-| `length(bs) = 1` and `bs[0] < 128` | ```byte(bs[0])``` |
+|-----------|---------:|
+| `length(bs) = 1` and `bs[0] < 128` | ```                                       byte(bs[0])``` |
 | `length(bs) < 120`                 | ```byte(128 + length(bs))                 byte(bs[0]) ... byte(bs[length(bs) - 1])``` |
 | otherwise                          | ```byte(255)              u32(length(bs)) byte(bs[0]) ... byte(bs[length(bs) - 1])``` |
 
@@ -80,7 +80,7 @@ The rules in the following table is used to encode byte sequences. The byte sequ
 The rules in the following table is used to encode constructors. The constructor number is called `b` and the fields of the constructor is an array called `fs`.
 
 | Condition | Encoding |
-|-----------|----------|
+|-----------|---------:|
 | exactly one constructor | ```                 encode(fs[0]) ... encode(fs[length(fs) - 1])``` |
 | `c < 128`               | ```byte(c)          encode(fs[0]) ... encode(fs[length(fs) - 1])``` |
 | otherwise               | ```byte(254) u32(c) encode(fs[0]) ... encode(fs[length(fs) - 1])``` |
@@ -90,6 +90,6 @@ The rules in the following table is used to encode constructors. The constructor
 If a type is defined exactly like the `List<T>` type mentioned earlier, modulo renaming of identifiers and constructor order, the following table may be used instead of the table in the previous section. The elements of the list is called `es`.
 
 | Condition | Encoding |
-|-----------|----------|
+|-----------|---------:|
 | `length(es) < 120` | ```byte(128 + length(es))                 encode(es[0]) ... encode(es[length(es) - 1])``` |
 | otherwise          | ```byte(255)              u32(length(es)) encode(es[0]) ... encode(es[length(es) - 1])``` |
