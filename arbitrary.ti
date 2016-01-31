@@ -1,0 +1,5 @@
+// Arbitrary-precision twos-complement integral number.
+type Integer(bytes value)
+
+// Arbitrary-precision fraction.
+type Fraction(Integer numerator, Integer denominator)
