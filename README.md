@@ -56,7 +56,12 @@ Representing signed and unsigned ints of different sizes is equally straightforw
     type F32(bytes value) 
     type F64(bytes value) 
 
-The binary format will make sure small values are represented in a compact fashion, and the in-memory format is as always up to the target language.
+The binary format will make sure small values are represented in a compact fashion, and big values with minimal overhead. The in-memory representation is as always up to the target language. 
+
+However, to ease interopability, the standard library only defines two numeric types: A 64 bit integer and a 64 bit floating point type.
+
+    type Long(bytes i64)
+    type Double(bytes f64)
 
 The schema language is encoded in ASCII and has the following grammar, where `UPPER` is an upper case letter (A-Z) followed by zero or more letters and digits (0-9), and where `LOWER` is as `UPPER`, except that `LOWER` starts with a lower case letter (a-z). Whitespace can be used to separate tokens, but is otherwise ignored.
 
