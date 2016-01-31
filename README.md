@@ -1,5 +1,5 @@
 # typed-format
-Experimental: A minimal and complete schema language and a compact binary format for data interchange.
+Experimental: A simple and complete schema language and a compact binary format for data interchange.
 
 
 ## Schema language
