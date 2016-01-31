@@ -77,7 +77,7 @@ The rules in the following table is used to encode byte sequences. The byte sequ
 
 ### Constructors
 
-The rules in the following table is used to encode constructors. The constructor number is called `b` and the fields of the constructor is an array called `fs`.
+The rules in the following table is used to encode constructors. The constructor number is called `c` and the fields of the constructor is an array called `fs`.
 
 | Condition | Encoding |
 |-----------|---------:|
