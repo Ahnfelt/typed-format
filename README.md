@@ -39,11 +39,11 @@ As is evident from the example above, generic types are supported. Recursive typ
 
 In the above example, a list of three numbers 1-3 could be written in pseudo-code as `Link(1, Link(2, Link(3, Empty))`. In practice, the native representation of any given user-defined type can be customized for each target language. In many languages, the elements of such a list would be parsed into an array, rather than a linked list.
 
-All the types that are called "primitive" in other languages can be defined as a user-defined type wrapping a byte sequence. For example, the standard library contains a `String` type with a field `utf8` that, as the name implies, contains UTF-8-encoded text:
+All the types that are called "primitive" in other languages can be defined as a user-defined type wrapping a byte sequence. For example, the optional standard library `common.ti` contains a `String` type with a field `utf8` that, as the name implies, contains UTF-8-encoded text:
 
     type String(bytes utf8)
 
-To ease interopability, the standard library only defines two numeric types: A 64 bit integer and a 64 bit floating point type.
+To ease interopability, the optional standard library `common.ti` only defines two numeric types: A 64 bit integer and a 64 bit floating point type.
 
     type Int(bytes i64)
     type Float(bytes f64)
