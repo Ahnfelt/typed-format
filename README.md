@@ -63,29 +63,19 @@ The schema language is encoded in ASCII and has the following grammar, where `UP
 
 ## Binary format
 
-The binary format encodes byte sequences and constructors. For both there is a long form, a short form and a tiny form. The encode must always use the shortest possible form. As an exception to this, the array form may be used instead when applicable.
+The following sections contain the logic for encoding values into the binary format. The syntax `a[i]` means the element `i` of array `a`, where `i` is the zero based array index. The syntax `length(a)` means the number of elements in array `a`. The syntax `byte(b)` is the literal value of `b` as a byte in the resulting encoding. The syntax `u32(i)` is the literal value of `i` as a 32 bit unsigned big-endian integer in the resulting encoding. The syntax `f(a[0]) ... f(a[length(a) - 1])` means "apply `f` to all elements of `a` in order".
 
-### Long forms
+### Byte sequences
 
-*Long byte sequence form:* The byte `255` followed by four bytes containing the length as a 32-bit big endian unsigned integer, followed by the raw bytes.
+| Condition | Encoding |
+| ------------------------|----------|
+| length(bs) = 1, bs[0] < 128 | byte(bs[0]) |
+| length(bs) < 120 | byte(128 + length(bs)) byte(bs[0]) ... byte(bs[length(bs) - 1]) |
+| otherwise | byte(255) u32(length(bs)) byte(bs[0]) ... byte(bs[length(bs) - 1]) |
 
-*Long constructor form:* The byte `254` followed by four bytes containing the contstructor number (the first constructor is number 0, the second is number 1 and so on), followed by the serialization of the constructor fields (if any).
+### Constructors
 
-### Short forms
-
-*Short byte sequence form:* Only available when the byte sequence is either empty or has a length between 2 and 119 (both inclusive). The byte `n + 128` where `n` is the length of the byte sequence, followed by the raw bytes.
-
-*Short constructor form:* Only available when the constructor number is less than 128. The byte `n` where `n` is the constructor number, followed by the serialization of the constructor fields (if any).
-
-### Tiny forms
-
-*Tiny byte sequence form:* Only available when the byte sequence is exactly one byte long, and that byte is in the range 0 to 127 (both inclusive). The byte `n`, where `n` is the only byte in the sequence.
-
-### Array forms
-
-These are only available for types that are defined exactly like `List<T>` above, modulo renaming of identifiers and reordering of the two constructors.
-
-*Long array form:* The byte `255` followed by four bytes containing the length of the list as a 32-bit big endian unsigned integer, followed by the serialization of the elements of the list.
-
-*Short array form:* Only available when the length of the list is less than 128. The byte `n + 128` where `n` is the length of the list, followed by the serialization of the elements of the list.
-
+| Condition | Encoding |
+| ------------------------|----------|
+| c < 128 | byte(c) encode(fs[0]) ... encode(fs[length(fs) - 1]) |
+| otherwise | byte(254) u32(c) encode(fs[0]) ... encode(fs[length(fs) - 1]) |
