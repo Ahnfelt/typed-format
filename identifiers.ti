@@ -1,0 +1,10 @@
+// A UUID, represented as 16 bytes (TODO: in what order?)
+type Uuid(bytes uuid)
+
+// URL, URN and URI datatypes
+type Url(String uri)
+type Urn(String uri)
+type Uri(String uri)
+
+// An e-mail address
+type Email(String address)
