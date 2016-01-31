@@ -69,13 +69,13 @@ The following sections contain the logic for encoding values into the binary for
 
 | Condition | Encoding |
 | ------------------------|----------|
-| length(bs) = 1, bs[0] < 128 | byte(bs[0]) |
-| length(bs) < 120 | byte(128 + length(bs)) byte(bs[0]) ... byte(bs[length(bs) - 1]) |
-| otherwise | byte(255) u32(length(bs)) byte(bs[0]) ... byte(bs[length(bs) - 1]) |
+| `length(bs) = 1` and `bs[0] < 128` | `byte(bs[0])` |
+| `length(bs) < 120` | `byte(128 + length(bs)) byte(bs[0]) ... byte(bs[length(bs) - 1])` |
+| `otherwise` | `byte(255) u32(length(bs)) byte(bs[0]) ... byte(bs[length(bs) - 1])` |
 
 ### Constructors
 
 | Condition | Encoding |
 | ------------------------|----------|
-| c < 128 | byte(c) encode(fs[0]) ... encode(fs[length(fs) - 1]) |
-| otherwise | byte(254) u32(c) encode(fs[0]) ... encode(fs[length(fs) - 1]) |
+| `c < 128` | `byte(c) encode(fs[0]) ... encode(fs[length(fs) - 1])` |
+| `otherwise` | `byte(254) u32(c) encode(fs[0]) ... encode(fs[length(fs) - 1])` |
