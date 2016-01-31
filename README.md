@@ -63,7 +63,7 @@ The schema language is encoded in ASCII and has the following grammar, where `UP
 
 ## Binary format
 
-The following sections contain the logic for encoding values into the binary format. The resulting functions is called `encode`. Pick the first row in the table that is applicable. The syntax `a[i]` means the element `i` of array `a`, where `i` is the zero based array index. The syntax `length(a)` means the number of elements in array `a`. The syntax `b(b)` is the literal value of `b` as a byte in the resulting encoding. The syntax `u32(i)` is the literal value of `i` as a 32 bit unsigned big-endian integer in the resulting encoding. The syntax `f(a[...])` means "apply `f` to all elements of `a` in order".
+The following sections contain the logic for encoding values into the binary format. The resulting functions is called `encode`. Pick the first row in the table that is applicable. The syntax `a[i]` means the element `i` of array `a`, where `i` is the zero based array index. The syntax `length(a)` means the number of elements in array `a`. The syntax `B(x)` is the literal value of `x` as a byte in the resulting encoding. The syntax `U(i)` is the literal value of `i` as a 32 bit unsigned big-endian integer in the resulting encoding. The syntax `f(a[...])` means "apply `f` to all elements of `a` in order".
 
 ### Byte sequences
 
@@ -71,9 +71,9 @@ The rules in the following table is used to encode byte sequences. The byte sequ
 
 | Condition | Encoding |
 |-----------|---------:|
-| `length(bs) = 1` and `bs[0] < 128` | ```                                    b(bs[0])``` |
-| `length(bs) < 120`                 | ```b(128 + length(bs))                 b(bs[...])``` |
-| otherwise                          | ```b(255)              u32(length(bs)) b(bs[...])``` |
+| `length(bs) = 1` and `bs[0] < 128` | ```                                  B(bs[0])``` |
+| `length(bs) < 120`                 | ```B(128 + length(bs))               B(bs[...])``` |
+| otherwise                          | ```B(255)              U(length(bs)) B(bs[...])``` |
 
 ### Constructors
 
@@ -81,9 +81,9 @@ The rules in the following table is used to encode constructors. The constructor
 
 | Condition | Encoding |
 |-----------|---------:|
-| exactly one constructor | ```              encode(fs[...])``` |
-| `c < 128`               | ```b(c)          encode(fs[...])``` |
-| otherwise               | ```b(254) u32(c) encode(fs[...])``` |
+| exactly one constructor | ```            encode(fs[...])``` |
+| `c < 128`               | ```B(c)        encode(fs[...])``` |
+| otherwise               | ```B(254) U(c) encode(fs[...])``` |
 
 ### Arrays
 
@@ -91,5 +91,5 @@ If a type is defined exactly like the `List<T>` type mentioned earlier, modulo r
 
 | Condition | Encoding |
 |-----------|---------:|
-| `length(es) < 120` | ```b(128 + length(es))                 encode(es[...])``` |
-| otherwise          | ```b(255)              u32(length(es)) encode(es[...])``` |
+| `length(es) < 120` | ```B(128 + length(es))               encode(es[...])``` |
+| otherwise          | ```B(255)              U(length(es)) encode(es[...])``` |
