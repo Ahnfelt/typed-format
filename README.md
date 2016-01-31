@@ -9,6 +9,12 @@ As an example, the following user-defined type `Person` has a text field `name` 
 
     type Person(String name, Int age)
 
+All type definitions follow the structure "there is a type of this name, with these generics, that can be constructed by one of the following constructors, which has the following fields". The `Person` definition is simply syntactic sugar for a type with exacly one constructor:
+
+    type Person {
+        Person(String name, Int age)
+    }
+
 Values of the following type `Bool` is either `False` or `True`:
 
     type Bool {
@@ -29,8 +35,28 @@ As is evident from the example above, generic types are supported. Recursive typ
         Link(T head, List<T> tail)
         Empty
     }
-    
+
 In the above example, a list of three numbers 1-3 could be written in pseudo-code as `Link(1, Link(2, Link(3, Empty))`. In practice, the native representation of any given user-defined type can be customized for each target language. In many languages, the elements of such a list would be parsed into an array, rather than a linked list.
+
+All the types that are called "primitive" in other languages can be defined as a user-defined type wrapping a byte sequence. For example, the standard library contains a `String` type with a field `utf8` that, as the name implies, contains UTF-8-encoded text:
+
+    type String(bytes utf8)
+    
+Representing signed and unsigned ints of different sizes is equally straightforward, as is floating point values:
+
+    type I8(bytes value)
+    type I16(bytes value)
+    type I32(bytes value)
+    type I64(bytes value)
+    type U8(bytes value) 
+    type U16(bytes value) 
+    type U32(bytes value) 
+    type U64(bytes value) 
+    type F16(bytes value) 
+    type F32(bytes value) 
+    type F64(bytes value) 
+
+The binary format will make sure small values are represented in a compact fashion, and the in-memory format is as always up to the target language.
 
 The schema language is encoded in ASCII and has the following grammar, where `UPPER` is an upper case letter (A-Z) followed by zero or more letters and digits (0-9), and where `LOWER` is as `UPPER`, except that `LOWER` starts with a lower case letter (a-z). Whitespace can be used to separate tokens, but is otherwise ignored.
 
