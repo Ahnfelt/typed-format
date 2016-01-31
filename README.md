@@ -23,7 +23,7 @@ Values of the following type `Bool` is either `False` or `True`:
         True
     }
 
-The following type describes an optional value, the type safe alternative to `null`. For example, an optional integer could be `None`, indicating no value, or `Some(42)`, indicating a value of 42:
+The following type describes an optional value. For example, an optional integer could be `None`, indicating no value, or `Some(42)`, indicating a value of 42:
 
     type Option<T> {
         None
