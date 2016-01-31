@@ -63,6 +63,10 @@ The schema language is encoded in ASCII and has the following grammar, where `UP
 
 ## Binary format
 
+The binary format is a compact representation of values, and requires a schema to encode and decode. The format is designed to allow for tiny implementations and efficient encoding and decoding. Many common values fit into a single byte. The longest byte sequence that can be represented is 4.294.967.295 bytes long (~ 4 GB). It's possible to have "unknown length" of unlimited size, which can be useful for streaming data.
+
+### Definitions
+
 The following sections contain the logic for encoding values into the binary format. Pick the first row in the table that is applicable. The syntax `a[i]` means the element `i` of array `a`, where `i` is the zero based array index. The syntax `length(a)` means the number of elements in array `a`. The syntax `B(x)` is the literal value of `x` as a byte in the resulting encoding. The syntax `U(x)` is the literal value of `x` as a 32 bit unsigned big-endian integer in the resulting encoding. The syntax `E(x)` is the encoding of `x` as specified by this section. The syntax `f(a[...])` means "apply `f` to all elements of `a` in order".
 
 ### Byte sequences
@@ -87,7 +91,7 @@ The rules in the following table is used to encode constructors. The constructor
 
 ### Arrays
 
-If a type is defined exactly like the `List<T>` type mentioned earlier, modulo renaming of identifiers and constructor order, the following table may be used instead of the table in the previous section. The elements of the list is called `es`.
+If a type is defined exactly like the `List<T>` type mentioned earlier, modulo renaming of identifiers and constructor order, the following table MAY be used instead of the table in the previous section. The elements of the list is called `es`.
 
 | Condition | Encoding |
 |-----------|---------:|
