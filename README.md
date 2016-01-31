@@ -52,7 +52,8 @@ The binary format will make sure small values are represented in a compact fashi
 
 It's possible to import schemas from URLs, for use in the local schema, eg.
 
-    import Standard https://raw.githubusercontent.com/Ahnfelt/typed-format/master/foo.ti
+    import S https://raw.githubusercontent.com/Ahnfelt/typed-format/master/foo.ti
+    type Author(S.List<S.String> bookTitles)
 
 The schema language is encoded in ASCII and has the following grammar, where `UPPER` is an upper case letter (A-Z) followed by zero or more letters and digits (0-9), and where `LOWER` is as `UPPER`, except that `LOWER` starts with a lower case letter (a-z). The `URL` is simply a sequence of one or more non-whitespace characters. Whitespace can be used to separate tokens, but is otherwise ignored.
 
@@ -63,7 +64,7 @@ The schema language is encoded in ASCII and has the following grammar, where `UP
     fields     ::= "(" (type LOWER ("," type LOWER)*)? ")"
     generics   ::= "<" UPPER ("," UPPER)* ">"
     type       ::= "bytes" | custom
-    custom     ::= UPPER ("<" custom ("," custom)* ">")?
+    custom     ::= (UPPER ".")? UPPER ("<" custom ("," custom)* ">")?
 
 
 ## Binary format
